@@ -32,8 +32,14 @@ means that  items aren't expired until they are read.
 
 ## Installation
 
+1. Install dependencies
 ```bash
 $ npm install
+```
+
+2. Copy `.env.example` to `env` and modify the config or use the defaults.
+```bash
+$ cp .env.example .env
 ```
 
 ## Running the app
@@ -48,7 +54,6 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
 
 ## API
 
@@ -86,13 +91,9 @@ DELETE /cache/:key
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+
+There's a Postman collection you can play with, `test/cache-service-ts.postman_collection.json`.
 
 ## Support
 

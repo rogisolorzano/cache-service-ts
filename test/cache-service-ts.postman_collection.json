@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "363c73d9-eb02-49b9-9b89-cacb2035778f",
+		"name": "cache-service-ts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ca2144f-bab0-4a07-92ca-4605396bb9b8",
+						"exec": [
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"OK\");",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "97cba636-4cd0-4308-90d8-c1f34b754d6a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"myKey\",\n    \"value\": \"Test\",\n    \"ttl\": 120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f31d3c6a-ad5d-447b-bdbf-27d0d1fac68b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cache/myKey",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"myKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Invalid Key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4fb96790-dbb3-49d8-b5b3-8f50b77e38c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.value).to.eql(\"Test\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cache/myKey",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"myKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set - Key Length Overflow",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67ffb2a3-14ae-4901-a306-617221a699c5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"myKey\",\n    \"value\": \"Test\",\n    \"ttl\": 120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set - Body Length Overflow",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e474700-76c7-458c-9bd6-e39c960e1ddd",
+						"exec": [
+							"pm.test(\"Status code is 413\", function () {",
+							"    pm.response.to.have.status(413);",
+							"});",
+							"pm.test(\"JSON statusCode and message are correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(413);",
+							"    pm.expect(jsonData.message).to.eql(\"Payload Too Large\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"myKey\",\n    \"value\": \"Test\",\n    \"ttl\": 120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cache/myKey",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"myKey"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
