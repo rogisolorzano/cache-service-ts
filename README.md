@@ -26,7 +26,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a caching service that uses a hashmap and a doubly linked list to achieve gets,
+sets and deletions in constant time. Uses lazy expiration to enforce item expiry. This
+means that  items aren't expired until they are read.
 
 ## Installation
 
@@ -45,6 +47,38 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+
+## API
+
+---
+### Get
+Get a value from cache for a key.
+```http request
+GET /cache/:key
+```
+---
+### Set
+Set a value in cache for a key.
+```http request
+PUT /cache
+```
+
+**Request Body**
+```json
+{
+   "key": "myKey",
+   "value": "My value",
+   "ttl": 60
+}
+```
+
+---
+### Delete
+Delete a key from cache.
+```http request
+DELETE /cache/:key
 ```
 
 ## Test
