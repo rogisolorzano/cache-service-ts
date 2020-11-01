@@ -5,7 +5,7 @@ import { SetValueDto } from './dto/set-value.dto';
 export class CacheService {
   async get(key: string): Promise<string> {
     // TODO
-    return "";
+    return "To do";
   }
 
   async set(setValueDto: SetValueDto) {
