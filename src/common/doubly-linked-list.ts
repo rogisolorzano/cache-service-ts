@@ -54,18 +54,28 @@ export class DoublyLinkedList<T> {
 
   /**
    * Removes the last item in the linked list.
-   *
-   * @return {DoublyLinkedListNode<T> | undefined}
    */
-  popBack(): DoublyLinkedListNode<T> | undefined {
+  popBack() {
+    this.popNode(this.tail);
+  }
+
+  /**
+   * Remove a specific node from the list.
+   */
+  popNode(node: DoublyLinkedListNode<T>) {
     if (this.isEmpty()) {
       return;
     } else if (this.hasOnlyOneItem()) {
       this.head = null;
       this.tail = null;
-    } else {
+    } else if (node === this.head) {
+      this.head = this.head.next;
+      this.head.previous = null;
+    } else if (node === this.tail) {
       this.tail = this.tail.previous;
       this.tail.next = null;
+    } else {
+      DoublyLinkedList.detachNode(node);
     }
     this.size--;
   }

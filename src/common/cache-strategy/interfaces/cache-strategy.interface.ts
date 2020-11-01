@@ -1,4 +1,4 @@
-import { ICacheConfig } from './cache-config.interface';
+export type Seconds = number;
 
 export interface ICacheStrategy {
   /**
@@ -6,21 +6,21 @@ export interface ICacheStrategy {
    *
    * @param {string} key
    */
-  get(key: string): string;
+  get(key: string): string | null;
 
   /**
    * Set the value for a key, with cache configuration.
    *
-   * @param key
-   * @param value
-   * @param config
+   * @param {string} key
+   * @param {string} value
+   * @param {Seconds} ttl
    */
-  set(key: string, value: string, config: ICacheConfig): string;
+  set(key: string, value: string, ttl: Seconds);
 
   /**
    * Delete the value for a key.
    *
-   * @param key
+   * @param {string} key
    */
-  delete(key: string): string;
+  delete(key: string);
 }
