@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { SetValueDto } from './dto/set-value.dto';
 import { ConfigService } from '@nestjs/config';
 import { LruCacheStrategy } from '../common/cache-strategy/lru-cache-strategy';
-import { ICacheConfig } from '../common/cache-strategy/interfaces';
+import { ICacheConfig, ICacheStrategy } from '../common/cache-strategy/interfaces';
 
 @Injectable()
 export class CacheService {
-  cacheStrategy: LruCacheStrategy;
+  cacheStrategy: ICacheStrategy;
 
   constructor(private configService: ConfigService) {
     this.cacheStrategy = LruCacheStrategy.sharedInstance(
